@@ -38,12 +38,17 @@ def can_enroll(student_id, course_code):
     course = find_course(course_code)
     if course is None:
         return False, "Hoc phan khong ton tai"
-    if course["enrolled"] >= course["capacity"]:
-        return False, "Lop da du so luong"
+    if not any(student["id"] == student_id for student in students):
+        return False, "Sinh vien khong ton tai"
+    
     duplicated = any(
         item["student_id"] == student_id and item["course_code"] == course_code
         for item in enrollments
     )
+    if duplicated:
+        return False, "Sinh vien da dang ky hoc phan nay"
+    if course["enrolled"] >= course["capacity"]:
+            return False, "Lop da du so luong"
     return True, "Co the dang ky"
 
 print(can_enroll("22000001", "INT2204"))
@@ -65,3 +70,30 @@ def search_courses(keyword):
     return results
 
 print(search_courses("web"))
+#1. Hoàn thành hàm đăng ký học phần 
+def enroll_student(student_id, course_code):
+    can_enroll_result, message = can_enroll(student_id, course_code)
+    if not can_enroll_result:
+        return False, message
+    enrollments.append({"student_id": student_id, "course_code": course_code})
+    course = find_course(course_code)
+    course["enrolled"] += 1
+    return True, "Dang ky thanh cong"
+#Kiểm tra chương trình
+#TH1: Đăng ký thành công
+result, message = enroll_student("22000002", "INT2204")
+print(result, message)
+#TH2: Đăng ký trùng
+result, message = enroll_student("22000001", "INT2204")
+print(result, message)
+#TH3: Lớp đầy   
+result, message = enroll_student("22000002", "INT2205")
+print(result, message)
+#TH4: Mã học phần không tồn tại
+result, message = enroll_student("22000002", "INT2206")
+print(result, message)  
+#TH5: Mã sinh viên không tồn tại
+result, message = enroll_student("22000003", "INT2204") 
+print(result, message)
+#3.
+
