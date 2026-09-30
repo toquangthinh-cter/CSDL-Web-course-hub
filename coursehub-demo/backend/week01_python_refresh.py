@@ -95,5 +95,23 @@ print(result, message)
 #TH5: Mã sinh viên không tồn tại
 result, message = enroll_student("22000003", "INT2204") 
 print(result, message)
+#Kết quả quan sát được:
+"""
+CourseHub - Buoi 1
+INT2204 - con 1 cho
+INT2205 - con 0 cho
+{'code': 'INT2204', 'name': 'Co so du lieu Web va he thong thong tin', 'capacity': 3, 'enrolled': 2}
+(False, 'Sinh vien da dang ky hoc phan nay')
+Nhap so luong hoc phan muon hien thi:2
+[{'code': 'INT2204', 'name': 'Co so du lieu Web va he thong thong tin', 'capacity': 3, 'enrolled': 2}, {'code': 'INT2205', 'name': 'Khai pha du lieu', 'capacity': 2, 'enrolled': 2}]
+[{'code': 'INT2204', 'name': 'Co so du lieu Web va he thong thong tin', 'capacity': 3, 'enrolled': 2}]
+True Dang ky thanh cong
+False Sinh vien da dang ky hoc phan nay
+False Lop da du so luong
+False Hoc phan khong ton tai
+False Sinh vien khong ton tai
+"""
+
+
 
 
