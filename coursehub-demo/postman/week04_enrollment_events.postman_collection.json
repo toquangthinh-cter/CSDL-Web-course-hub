@@ -1,0 +1,298 @@
+{
+  "info": {
+    "name": "week04_enrollment_events",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Đ1 - Có dữ liệu: theo student_id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?student_id=22000004",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "student_id",
+              "value": "22000004"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Đ2 - Lọc event_type=CREATED",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?student_id=22000004&event_type=CREATED",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "student_id",
+              "value": "22000004"
+            },
+            {
+              "key": "event_type",
+              "value": "CREATED"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Đ3 - Phân trang limit=1 skip=1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?student_id=22000004&limit=1&skip=1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "student_id",
+              "value": "22000004"
+            },
+            {
+              "key": "limit",
+              "value": "1"
+            },
+            {
+              "key": "skip",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Đ4 - Không có dữ liệu",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?student_id=99999999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "student_id",
+              "value": "99999999"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "L1 - limit=0 (lỗi)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?limit=0",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "L2 - skip=-1 (lỗi)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?skip=-1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "skip",
+              "value": "-1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "L3 - event_type=ABC (lỗi)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?event_type=ABC",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "event_type",
+              "value": "ABC"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "L4 - Chuỗi kiểu SQL injection (lỗi)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollment-events?student_id=%27%20OR%20%271%27%3D%271",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollment-events"
+          ],
+          "query": [
+            {
+              "key": "student_id",
+              "value": "%27%20OR%20%271%27%3D%271"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    }
+  ]
+}
