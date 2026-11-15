@@ -5,11 +5,19 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from .database import engine
 from .schemas import EnrollmentCreate
+from fastapi.middleware.cors import CORSMiddleware
 logger = logging.getLogger(__name__)
 app = FastAPI(
     title="CourseHub API",
     version="0.4.0",
     description="API thuc hanh Buoi 4 - transaction, locking va hieu nang",
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "DELETE","PATCH"],
+    allow_headers=["Content-Type"],
 )
 @app.get("/")
 def read_root() -> dict[str, str]:
@@ -378,4 +386,31 @@ def list_courses_limit(
     with engine.connect() as connection:
         rows = connection.execute(text(sql), parameters).mappings().all()
 
+    return [dict(row) for row in rows]
+
+@app.get("/enrollment-events")
+def list_enrollment_events(
+    student_id: str | None = Query(default=None, min_length=8, max_length=8),
+    event_type: str | None = Query(default=None, pattern="^(CREATED|CANCELLED)$"),
+    dataset: str = Query(default="demo", pattern="^(demo|performance)$"),
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=20, ge=1, le=100),
+) -> list[dict]:
+    sql = """
+        SELECT id, student_id, class_section_id, event_type,
+               source, dataset, occurred_at
+        FROM enrollment_events
+        WHERE dataset = :dataset
+    """
+    params: dict = {"dataset": dataset, "skip": skip, "limit": limit}
+    if student_id is not None:
+        sql += " AND student_id = :student_id"
+        params["student_id"] = student_id
+    if event_type is not None:
+        sql += " AND event_type = :event_type"
+        params["event_type"] = event_type
+    sql += " ORDER BY occurred_at DESC, id DESC LIMIT :limit OFFSET :skip"
+
+    with engine.connect() as connection:
+        rows = connection.execute(text(sql), params).mappings().all()
     return [dict(row) for row in rows]
