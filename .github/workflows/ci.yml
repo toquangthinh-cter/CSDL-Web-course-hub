@@ -1,4 +1,3 @@
-@'
 name: CourseHub CI
 
 on:
@@ -62,4 +61,3 @@ jobs:
         run: docker compose config
       - name: Build images
         run: docker compose build
-'@ | Set-Content -Path .github\workflows\ci.yml -Encoding UTF8
